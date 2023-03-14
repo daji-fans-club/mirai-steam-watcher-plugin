@@ -32,6 +32,7 @@ object PluginMain : KotlinPlugin(
         version = "0.1.0"
     )
 ) {
+    lateinit var httpClient: HttpClient
 
     override fun onEnable() {
         SteamConfig.reload()
@@ -39,7 +40,8 @@ object PluginMain : KotlinPlugin(
         SteamUserData.steamUserStatusMap.clear()
         OperationManager.register()
         AbstractPermitteeId.AnyContact.permit(OperationManager.permission)
-        ScheduleTask().start(HttpClient())
+        httpClient = HttpClient()
+        ScheduleTask.start()
         logger.info { "steam game status watcher Plugin loaded" }
     }
 

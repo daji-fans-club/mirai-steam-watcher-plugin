@@ -8,15 +8,14 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import org.example.mirai.plugin.GetPlayerSummariesResponse
 import org.example.mirai.plugin.SteamCall
-import org.example.mirai.plugin.SteamResponse
 
 /**
  * @author reimia
  */
 internal class SteamCallTest {
     private val steamApiKey = "your-steam-key"
-    private val steamCall = SteamCall(HttpClient())
 
     @OptIn(ExperimentalSerializationApi::class)
     @Ignore
@@ -37,7 +36,7 @@ internal class SteamCallTest {
             ignoreUnknownKeys = true
             explicitNulls = false
         }
-        val steamResponse = json.decodeFromString<SteamResponse>(s)
+        val steamResponse = json.decodeFromString<GetPlayerSummariesResponse>(s)
         println(steamResponse)
     }
 
@@ -46,7 +45,7 @@ internal class SteamCallTest {
     fun steamRequest2() {
         val list = listOf(76561198212300964, 76561198871064283)
         val response =
-            runBlocking { steamCall.steamRequest(list) }
+            runBlocking { SteamCall.getPlayerSummaries(list) }
         println(response)
     }
 }

@@ -1,6 +1,5 @@
 package org.example.mirai.plugin
 
-import io.ktor.client.HttpClient
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.Timer
@@ -11,9 +10,9 @@ import net.mamoe.mirai.Bot
 /**
  * @author reimia
  */
-class ScheduleTask {
+object ScheduleTask {
 
-    fun start(client: HttpClient) {
+    fun start() {
         Timer().scheduleAtFixedRate(2000, 20000) {
             val bot = Bot.getInstanceOrNull(SteamConfig.bot)
             if (bot == null) {
@@ -24,7 +23,7 @@ class ScheduleTask {
                 return@scheduleAtFixedRate
             }
             val steamResponse = runBlocking {
-                SteamCall(client).steamRequest(steamUsers)
+                SteamCall.getPlayerSummaries(steamUsers)
             }
             PluginMain.logger.info(steamResponse.toString())
             steamResponse.forEach { curPlayerStatus ->
@@ -41,9 +40,9 @@ class ScheduleTask {
                         )
                     filter.forEach { pair ->
                         runBlocking {
-                            PluginMain.logger.info("${curPlayerStatus.personaname} 开始玩 ${curPlayerStatus.gameextrainfo}")
+                            PluginMain.logger.info("${curPlayerStatus.personaname} 正在玩 ${curPlayerStatus.gameextrainfo}")
                             bot?.getGroup(pair.second)
-                                ?.sendMessage("${curPlayerStatus.personaname} 开始玩 ${curPlayerStatus.gameextrainfo}")
+                                ?.sendMessage("${curPlayerStatus.personaname} 正在玩 ${curPlayerStatus.gameextrainfo}")
                         }
                     }
 
@@ -57,9 +56,9 @@ class ScheduleTask {
                             Instant.now()
                         )
                         runBlocking {
-                            PluginMain.logger.info("${curPlayerStatus.personaname} 玩了 $playedTime 分钟后，不玩 ${prePlayerStatus.gameextrainfo}了")
+                            PluginMain.logger.info("${curPlayerStatus.personaname} 玩了 $playedTime 分钟后，不玩 ${prePlayerStatus.gameextrainfo} 了")
                             bot?.getGroup(pair.second)
-                                ?.sendMessage("${curPlayerStatus.personaname} 玩了 $playedTime 分钟后，不玩 ${prePlayerStatus.gameextrainfo}了")
+                                ?.sendMessage("${curPlayerStatus.personaname} 玩了 $playedTime 分钟后，不玩 ${prePlayerStatus.gameextrainfo} 了")
                         }
                     }
                 }
@@ -77,9 +76,9 @@ class ScheduleTask {
                             Instant.now()
                         )
                         runBlocking {
-                            PluginMain.logger.info("${curPlayerStatus.personaname} 玩了 ${prePlayerStatus.gameextrainfo} $playedTime 分钟后，玩起了 ${curPlayerStatus.gameextrainfo}了")
+                            PluginMain.logger.info("${curPlayerStatus.personaname} 玩了 ${prePlayerStatus.gameextrainfo} $playedTime 分钟后，玩起了 ${curPlayerStatus.gameextrainfo}")
                             bot?.getGroup(pair.second)
-                                ?.sendMessage("${curPlayerStatus.personaname} 玩了 ${prePlayerStatus.gameextrainfo} $playedTime 分钟后，玩起了 ${curPlayerStatus.gameextrainfo}了")
+                                ?.sendMessage("${curPlayerStatus.personaname} 玩了 ${prePlayerStatus.gameextrainfo} $playedTime 分钟后，玩起了 ${curPlayerStatus.gameextrainfo}")
                         }
                     }
                 }
