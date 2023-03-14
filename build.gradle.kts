@@ -15,3 +15,10 @@ repositories {
     }
     mavenCentral()
 }
+
+dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+    implementation("io.ktor:ktor-client-serialization:2.2.4")
+    implementation("io.ktor:ktor-client-okhttp:2.2.4")
+    testImplementation(kotlin("test"))
+}
