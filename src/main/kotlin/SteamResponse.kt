@@ -2,9 +2,6 @@ package org.example.mirai.plugin
 
 import kotlinx.serialization.Serializable
 
-/**
- * @author reimia
- */
 @Serializable
 data class GetPlayerSummariesResponse(val response: Response)
 

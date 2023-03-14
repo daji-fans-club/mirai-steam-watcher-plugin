@@ -8,7 +8,9 @@ import net.mamoe.mirai.console.command.descriptor.ExperimentalCommandDescriptors
 import net.mamoe.mirai.console.util.ConsoleExperimentalApi
 
 /**
- * 瑟图配置命令管理
+ * steam命令管理
+ *
+ * @author reimia
  */
 object OperationManager : CompositeCommand(PluginMain, "steam") {
 

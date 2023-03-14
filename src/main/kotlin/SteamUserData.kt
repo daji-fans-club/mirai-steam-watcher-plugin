@@ -5,7 +5,9 @@ import net.mamoe.mirai.console.data.ValueDescription
 import net.mamoe.mirai.console.data.value
 
 /**
- * 瑟图存储数据
+ * steam存储数据
+ *
+ * @author reimia
  */
 object SteamUserData : AutoSavePluginData("SteamUserData") {
 

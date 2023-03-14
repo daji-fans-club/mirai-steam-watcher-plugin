@@ -5,7 +5,9 @@ import net.mamoe.mirai.console.data.ValueDescription
 import net.mamoe.mirai.console.data.value
 
 /**
- * 瑟图配置
+ * steam配置
+ *
+ * @author reimia
  */
 object SteamConfig : AutoSavePluginConfig("SteamConfig") {
 
