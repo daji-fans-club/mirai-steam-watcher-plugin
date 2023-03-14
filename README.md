@@ -11,6 +11,6 @@
 ## command
 
 - steam help： 查看帮助
-- steam add <steamId>： 添加一个偷窥
-- steam delete <steamId>： 删除一个偷窥
-- steam list： 偷窥一下所有人
+- steam add <steamId>： 添加一个steam监听
+- steam delete <steamId>： 删除一个监听
+- steam list： 看下所有人的状态

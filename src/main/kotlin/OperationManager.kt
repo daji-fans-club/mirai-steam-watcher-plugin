@@ -23,10 +23,13 @@ object OperationManager : CompositeCommand(PluginMain, "steam") {
         val groupId = user.group.id
         val realId = SteamCall.resolveVanityURL(id)
         if (realId != null) {
+            if (SteamUserData.steamUserList.contains(Pair(realId, groupId))) {
+                sendMessage("本群已经添加了steamId是 $realId 的监听")
+            }
             SteamUserData.steamUserList.add(Pair(realId, groupId))
-            sendMessage("添加成功, steamId是${realId}")
+            sendMessage("添加成功, steamId是 $realId")
         } else {
-            sendMessage("不合法的id，${id}")
+            sendMessage("不合法的id，$id")
         }
 
     }
@@ -40,7 +43,7 @@ object OperationManager : CompositeCommand(PluginMain, "steam") {
             SteamUserData.steamUserStatusMap.remove(realId)
             sendMessage("删除成功")
         } else {
-            sendMessage("不合法的id，${id}")
+            sendMessage("不合法的id，$id")
         }
     }
 
