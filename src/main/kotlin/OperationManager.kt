@@ -23,7 +23,7 @@ object OperationManager : CompositeCommand(PluginMain, "steam") {
         sendMessage("添加成功")
     }
 
-    @SubCommand("删除", "delete")
+    @SubCommand("删除", "移除", "delete", "remove")
     suspend fun MemberCommandSender.delete(id: Long) {
         val groupId = user.group.id
         SteamUserData.steamUserList.remove(Pair(id, groupId))
@@ -33,21 +33,26 @@ object OperationManager : CompositeCommand(PluginMain, "steam") {
 
     @SubCommand("列表", "list")
     suspend fun MemberCommandSender.list() {
-        val string = ""
         val groupId = user.group.id
         val steamUsers = SteamUserData.steamUserList.filter { pair -> pair.second == groupId }
             .map { pair -> pair.first }.distinct()
-        SteamUserData.steamUserStatusMap.filter { entry -> entry.key in steamUsers }
-            .forEach { (_, u) ->
-                string.plus(
-                    "${u.personaname} 正在玩 ${u.gameextrainfo}, 过了${
-                        ChronoUnit.MINUTES.between(
-                            Instant.ofEpochSecond(u.startTime),
-                            Instant.now()
-                        )
-                    }分钟\n"
-                )
-            }
-        sendMessage(string)
+        if (steamUsers.isEmpty()) {
+            sendMessage("本群没有任何监听")
+        } else {
+            val string = ""
+            SteamUserData.steamUserStatusMap.filter { entry -> entry.key in steamUsers }
+                .forEach { (_, u) ->
+                    string.plus(
+                        "${u.personaname} 正在玩 ${u.gameextrainfo}, 过了${
+                            ChronoUnit.MINUTES.between(
+                                Instant.ofEpochSecond(u.startTime),
+                                Instant.now()
+                            )
+                        }分钟\n"
+                    )
+                }
+            sendMessage(string)
+        }
+
     }
 }
