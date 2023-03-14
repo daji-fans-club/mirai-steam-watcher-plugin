@@ -10,7 +10,7 @@
 
 ## command
 
-- steam help 查看帮助
+- steam help:  查看帮助
 - steam add <steamId>： 添加一个偷窥
 - steam delete <steamId>： 删除一个偷窥
 - steam list： 偷窥一下所有人
