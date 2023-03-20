@@ -21,7 +21,7 @@ object OperationManager : CompositeCommand(PluginMain, "steam") {
     @SubCommand("添加", "add")
     suspend fun MemberCommandSender.add(id: String) {
         val groupId = user.group.id
-        val realId = SteamCall.resolveVanityURL(id)
+        val realId = if (id.length == 17) id.toLong() else SteamCall.resolveVanityURL(id)
         if (realId != null) {
             if (SteamUserData.steamUserList.contains(Pair(realId, groupId))) {
                 sendMessage("本群已经添加了steamId是 $realId 的监听")
